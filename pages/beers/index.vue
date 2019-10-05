@@ -48,32 +48,24 @@
 
 
 
-                  
-    <form @submit.prevent="handleSubmit">
-      <div>
-        <label for>ビール名</label>
-        <input type="text" v-model="title" />
+    <form @submit.prevent="handleSubmit" class="beer_form">
+      <div style="width: 100%;">
+        <div style="text-align: center; margin-top: 20px;">
+          <label style="font-size: 32px;">ビールを追加</label><br>
+           <input type="text" class="block" placeholder="ビール名" v-model="title" />
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+          <input type="text" placeholder="値段" class="block" v-model="price" />
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+          <input type="text" placeholder="アルコール度数" class="block" v-model="alcohol" />度
+        </div>
+        <div style="text-align: center; margin-top: 20px; ">
+          <input type="submit" style="width: 15%; color: #F39800;border-radius: 15px;border-color: gray;" value="追加" />
+        </div>
+         
       </div>
-      <div>
-        <label for>値段</label>
-        <input type="text" v-model="price" />
-      </div>
-      <div>
-        <label for>アルコール度数</label>
-        <input type="text" v-model="alcohol" />度数
-      </div>
-      <input type="submit" value="追加" />
     </form>
-    <li class="lists" v-for="(beer, index) in beers" :key="index">
-      id: {{beer.id}}
-      商品名: {{beer.title}}
-      値段: {{beer.price}}円
-       度数: {{beer.alcohol}}度
-      <button
-        @click="edit(beer)"
-      >編集</button>
-      <button @click="deleteItem(beer.id)">削除</button>
-    </li>
   </div>
 </template>
 
@@ -134,5 +126,21 @@ export default {
 .active {
   color: $beer;
   text-decoration: line-through;
+}
+.beer_form {
+  padding-top: 20px;
+}
+.form_label {
+  font-size: 30px;
+}
+.block{
+  text-align: center;
+  width: 200px;
+  border-radius: 15px;
+  border-color: gray;
+  transition: 0.25s;
+}
+.block:focus{
+  width: 300px
 }
 </style>
