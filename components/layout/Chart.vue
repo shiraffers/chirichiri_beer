@@ -1,28 +1,37 @@
 <script>
-import { Pie } from 'vue-chartjs'
+import { Bar } from 'vue-chartjs'
 
 export default {
-    extends: Pie,
-    props: ['graphData'],
-    data () {
+    extends: Bar,
+    props: ['items'],
+    data() {
         return {
             chartData: {
-                labels: this.graphData.type,
+                labels: this.items.map(value => value.title),
                 datasets: [{
-                    backgroundColor: this.graphData.color,
-                    data: [this.graphData.data1, this.graphData.data2]
-                }],
+                    label: 'sample',
+                    backgroundColor:'rgba(255, 60, 60, 0.3)',
+                    data: [20, 40, 60]
+                }]
             },
             options: {
                 title: {
                     display: true,
-                    text: 'Pie chart'
+                    text: 'Bar chart'
                 },
+                scales: {
+                    yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                            }
+                    }]
+                }
             }
         }
     },
     mounted: function() {
         this.renderChart(this.chartData, this.options)
+        console.log(this.items);
     }
 }
 </script>

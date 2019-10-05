@@ -1,29 +1,30 @@
 <template>
   <div>
-    <Chart class="chart" :graphData="sex"></Chart>
-    <Chart class="chart" :graph-data="smiling"></Chart>
+    <Chart :items="items"></Chart>
   </div>
 </template>
 
 <style>
-  .chart {
-    width: 40%;
-    float: left;
-  }
 </style>
 
 <script>
 import Chart from '../components/layout/Chart';
+import axios from 'axios';
 
 export default {
   components: {
-    Chart,
+    Chart
   },
   data() {
     return {
-      sex: { type: ['man', 'woman'], data1: 60, data2: 40, color: [ 'rgba(60, 60, 255, 0.3)', 'rgba(255, 60, 60, 0.3)' ] }, // ここにデータ挿入
-      smiling: { type: ['smiling'], data1: 60, data2: 40, color: [ 'rgba(255, 255, 0, 0.3)' ] }, // ここにデータ挿入
+        items: []
     }
+  },
+  async created() {
+    const { data } = await axios.get(`${process.env.API}/beers`);
+
+    this.items = data.Items.sort((a, b) => (a.id > b.id ? 1 : -1));
+    console.log(this.items.map(value => value.title));
   }
 }
 </script>
