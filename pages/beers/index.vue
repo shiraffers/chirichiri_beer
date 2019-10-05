@@ -12,7 +12,7 @@
       </div>
       <div>
         <label for>アルコール度数</label>
-        <input type="text" v-model="alcohol" />
+        <input type="text" v-model="alcohol" />度数
       </div>
       <input type="submit" value="追加" />
     </form>
@@ -20,7 +20,7 @@
       id: {{beer.id}}
       商品名: {{beer.title}}
       値段: {{beer.price}}円
-       度数: {{beer.alcohol}}円
+       度数: {{beer.alcohol}}度
       <button
         @click="edit(beer)"
       >編集</button>
@@ -43,21 +43,12 @@ export default {
   async created() {
     const { data } = await axios.get(`${process.env.API}/beers`);
 
-    // this.beers = data.Items.sort((a, b) => (a.id > b.id ? 1 : -1));
-    data.Items.forEach(beer => {
-      this.beers.push({
-        id: this.beers.length + 1,
-        title: beer.title,
-        price: beer.price,
-        alcohol: beer.alcohol,
-        isActive: false
-      });
-    });
+    this.beers = data.Items.sort((a, b) => (a.id > b.id ? 1 : -1));
   },
   methods: {
     async handleSubmit() {
       console.log("aaa");
-      console.log(this.price);
+      console.log(this.alcohol);
       const { data } = await axios.post(`${process.env.API}/beers`, {
         id: this.beers.length + 1,
         title: this.title,
