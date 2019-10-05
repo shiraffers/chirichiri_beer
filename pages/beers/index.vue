@@ -20,6 +20,7 @@
       id: {{beer.id}}
       商品名: {{beer.title}}
       値段: {{beer.price}}円
+       度数: {{beer.alcohol}}円
       <button
         @click="edit(beer)"
       >編集</button>
