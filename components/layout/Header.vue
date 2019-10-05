@@ -1,10 +1,12 @@
 <template>
   <div>
-    <ul>
-      <li v-for="(item,index) in items" :key="index">
-        <router-link :to="item.path">{{item.title}}</router-link>
-      </li>
-    </ul>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <ul class="navbar-nav">
+        <li v-for="(item,index) in items" :key="index" class="nav-item">
+          <router-link :to="item.path">{{item.title}}</router-link>
+        </li>
+      </ul>
+    </nav>
   </div>
 </template>
 
@@ -43,7 +45,11 @@ ul {
   width: 30%;
   line-height: 80px;
   a {
+    font-size:30px;
     color: #000;
+  }
+  a:hover{
+    text-decoration: none;
   }
 }
 </style>

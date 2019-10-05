@@ -5,7 +5,7 @@ export default {
   mode: 'spa',
   /*
   ** Headers of the page
-  
+
   */
 
   head: {
@@ -44,8 +44,9 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/style-resources'
-  ],
+    '@nuxtjs/style-resources',
+    'bootstrap-vue/nuxt'
+    ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options

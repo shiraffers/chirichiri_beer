@@ -1,7 +1,7 @@
 {
   "name": "shiraffers",
   "version": "1.0.0",
-  "description": "",
+  "description": ">",
   "author": "",
   "private": true,
   "scripts": {
@@ -14,13 +14,25 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.1",
     "chart.js": "^2.8.0",
-    "nuxt": "^2.0.0",
-    "vue-chartjs": "^3.4.2"
+    "vue-chartjs": "^3.4.2",
+    "aws-sdk": "^2.543.0",
+    "bootstrap-vue": "^2.0.2",
+    "nuxt": "^2.0.0"
   },
   "devDependencies": {
     "@nuxtjs/style-resources": "^1.0.0",
     "node-sass": "^4.12.0",
     "nuxt-sass-resources-loader": "^2.0.5",
     "sass-loader": "^8.0.0"
-  }
+  },
+  "main": "nuxt.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shiraffers/chirichiri_beer.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shiraffers/chirichiri_beer/issues"
+  },
+  "homepage": "https://github.com/shiraffers/chirichiri_beer#readme"
 }
