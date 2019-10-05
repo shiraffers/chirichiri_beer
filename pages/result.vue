@@ -10,9 +10,9 @@ export default {
           chartData: {
                 labels: [],
                 datasets: [{
-                    label: 'sample',
+                    label: 'コスパ度数',
                     backgroundColor:'rgba(255, 60, 60, 0.3)',
-                    data: [20, 40, 60]
+                    data: []
                 }]
             },
             options: {
@@ -32,16 +32,26 @@ export default {
     },
     async created() {
        console.log("大人")
-    const { data } = await axios.get(`${process.env.API}/beers`);
+      const { data } = await axios.get(`${process.env.API}/beers`);
+      this.items = data.Items.sort((a, b) => (a.id > b.id ? 1 : -1));
 
-    this.items = data.Items.sort((a, b) => (a.id > b.id ? 1 : -1));
- 
-        console.log({items: this.items});
-        this.chartData.labels = this.items.map(item => {
-          console.log("aaa")
-          return item.title
-        })
-            this.renderChart(this.chartData, this.options)
+          console.log({items: this.items});
+          this.chartData.labels = this.items.map(item => {
+            console.log("aaa")
+            return item.title
+          })
+
+           this.chartData.datasets[0].data = this.items.map(item => {
+            return item.alcohol / item.price * 100
+          })
+        this.renderChart(this.chartData, this.options)
   }
 }
 </script>
+
+
+<style>
+#bar-chart{
+
+}
+</style>
