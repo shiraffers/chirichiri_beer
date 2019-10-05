@@ -1,137 +1,194 @@
 <template>
-  <div class="container">
-
-    <h3>beers</h3>
-
-    <table class="table table-responsive-sm table-hover table-outline mb-0">
-                    <thead class="thead-light">
-                      <tr>
-                        <th>ビール名</th>
-                        <th>値段</th>
-                        <th>アルコール度数</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                       <tr class="lists" v-for="(beer, index) in beers" :key="index">
-                        <td class="text-center">
-                          <div>{{beer.title}}</div>
-                          <div class="small text-muted">
-                            <span>New</span> | Registered: Jan 1, 2015</div>
-                        </td>
-                        <td>
-                          <div>{{beer.price}}円</div>
-                          <div class="small text-muted">
-                            <span>New</span> | Registered: Jan 1, 2015</div>
-                        </td>
-                        <td>
-                          <div class="clearfix">
-                            <div class="float-left">
-                              <strong>{{beer.alcohol}}</strong>
-                            </div>
-                          </div>
-                          <div class="progress progress-xs">
-                            <div class="progress-bar bg-success" role="progressbar" :style="{width: `${beer.alcohol}%`}" :aria-valuenow="beer.alcohol" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-
-
-
-    <form @submit.prevent="handleSubmit" class="beer_form">
-      <div style="width: 100%;">
-        <div style="text-align: center; margin-top: 20px;">
-          <label style="font-size: 32px;">ビールを追加</label><br>
-           <input type="text" class="block" placeholder="ビール名" v-model="title" />
-        </div>
-        <div style="text-align: center; margin-top: 20px;">
-          <input type="text" placeholder="値段" class="block" v-model="price" />
-        </div>
-        <div style="text-align: center; margin-top: 20px;">
-          <input type="text" placeholder="アルコール度数" class="block" v-model="alcohol" />度
-        </div>
-        <div style="text-align: center; margin-top: 20px; ">
-          <input type="submit" style="width: 20%; color: #F39800;border-radius: 15px;border-color: gray;" value="追加" />
-        </div>
-
+  <div class="bg">
+    <div class="container">
+      <div class="mug">
+        <div class="beer"></div>
       </div>
-    </form>
+      <div class="bubble"></div>
+      <div class="small-bubbles"></div>
+      <div class="drip"></div>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
 export default {
-  data() {
-    return {
-      beers: [],
-      title: "",
-      price: null,
-      alcohol: null
-    };
-  },
-  async created() {
-    const { data } = await axios.get(`${process.env.API}/beers`);
-
-    this.beers = data.Items.sort((a, b) => (a.id > b.id ? 1 : -1));
-          console.log(this.beers);
-  },
-  methods: {
-    async handleSubmit() {
-      console.log("aaa");
-
-      const { data } = await axios.post(`${process.env.API}/beers`, {
-        id: this.beers.length + 1,
-        title: this.title,
-        price: this.price,
-        alcohol: this.alcohol
-      });
-      this.beers.push({
-        id: this.beers.length + 1,
-        title: this.title,
-        price: this.price,
-        alcohol: this.alcohol
-      });
-      this.title = null;
-      this.price = null;
-      this.alcohol = null;
-    },
-    edit(beer) {
-      this.$router.push({
-        name: "beers-id",
-        params: {
-          id: beer.id,
-          beer: beer
-        }
-      });
-    },
-    deleteItem(id) {
-      this.beers[id - 1].isActive = true;
-    }
-  }
+  layout: "sample"
 };
 </script>
 
-<style lang="scss">
-.active {
-  color: $beer;
-  text-decoration: line-through;
+<style lang="scss" >
+$mug: #eef5f8;
+$beer: #ffd36d;
+$bubble: darken(#ffd36d, 7%);
+@mixin size($w: 100%, $h: 100%) {
+  width: $w;
+  height: $h;
 }
-.beer_form {
-  padding-top: 20px;
+
+.bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  background: #7dcfb6;
+  width: 100%;
 }
-.form_label {
-  font-size: 30px;
+.container {
+  left: 34%;
+  position: relative;
 }
-.block{
-  text-align: center;
-  width: 200px;
-  border-radius: 15px;
-  border-color: gray;
-  transition: 0.25s;
+
+.beer,
+.bubble,
+.small-bubbles,
+.drip {
+  position: absolute;
 }
-.block:focus{
-  width: 300px
+
+.bubble,
+.small-bubbles,
+.drip {
+  background: white;
+}
+
+.bubble,
+.small-bubbles {
+  border-radius: 100%;
+}
+
+.mug {
+  position: relative;
+  @include size(20vmin, 32vmin);
+  background: $mug;
+  border-radius: 2vmin;
+  &:before,
+  &:after {
+    position: absolute;
+    content: "";
+  }
+  &:before {
+    z-index: -2;
+    left: 12vmin;
+    top: 6vmin;
+    @include size(15vmin, 17vmin);
+    border-radius: 19%;
+    background: $mug;
+  }
+  &:after {
+    z-index: -1;
+    @include size(12vmin, 13vmin);
+    top: 8vmin;
+    left: 13vmin;
+    background: #7dcfb6;
+    border-radius: 19%;
+  }
+}
+
+.beer {
+  top: 2vmin;
+  left: 2vmin;
+  @include size(16vmin, 28vmin);
+  background: $beer;
+  border-radius: 1vmin;
+  &:before,
+  &:after {
+    position: absolute;
+    content: "";
+    background: $bubble;
+    border-radius: 100%;
+  }
+  &:before {
+    animation: 4s up infinite;
+    @include size(2vmin, 2vmin);
+    bottom: 2vmin;
+    left: 5vmin;
+    box-shadow: 7vmin -15vmin 0 $bubble, 4vmin -10vmin 0 $bubble,
+      6vmin -3vmin 0 $bubble;
+  }
+  &:after {
+    animation: 4s up infinite;
+    @include size(1.5vmin, 1.5vmin);
+    bottom: 6vmin;
+    left: 7vmin;
+    box-shadow: -3vmin -8vmin 0 $bubble, 7vmin -5vmin 0 $bubble;
+  }
+}
+
+.bubble {
+  @include size(10vmin, 10vmin);
+  top: -5vmin;
+  left: -3vmin;
+  &:before,
+  &:after {
+    position: absolute;
+    content: "";
+    background: white;
+    border-radius: 100%;
+  }
+  &:before {
+    @include size(12vmin, 12vmin);
+    left: 5vmin;
+    top: -2vmin;
+  }
+  &:after {
+    @include size(10vmin, 10vmin);
+    left: 14vmin;
+    top: 0vmin;
+  }
+}
+
+.small-bubbles {
+  @include size(5vmin, 5vmin);
+  top: -7vmin;
+  left: 11vmin;
+  &:before,
+  &:after {
+    position: absolute;
+    content: "";
+    border-radius: 100%;
+    background: white;
+  }
+  &:before {
+    @include size(3vmin, 3vmin);
+    top: -6vmin;
+    left: -3vmin;
+  }
+  &:after {
+    @include size(3vmin, 3vmin);
+    top: -8vmin;
+    left: -8vmin;
+  }
+}
+
+.drip {
+  @include size(5vmin, 14vmin);
+  top: 1vmin;
+  border-radius: 100px;
+  left: -2vmin;
+  box-shadow: 4vmin -6vmin 0 white;
+  animation: 6s drip infinite;
+}
+
+@keyframes up {
+  0% {
+    transform: translateY(0px);
+  }
+  99% {
+    transform: translateY(-70px);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes drip {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    height: 25vmin;
+  }
 }
 </style>

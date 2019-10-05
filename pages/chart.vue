@@ -5,22 +5,20 @@
 </template>
 
 <script>
-import axios from "axios"
+import axios from "axios";
 export default {
-    data(){
-        return{
-            
-        }
-    },
-   async created(){
-    console.log(process.env.API)
+  data() {
+    return {};
+  },
+  async created() {
+    console.log(process.env.API);
     const { data } = await axios.get(`${process.env.API}/beers`);
     this.beers = data.Items.sort((a, b) => (a.id > b.id ? 1 : -1));
-   }
+  }
 };
 </script>
 
-<style>
+<style scoped>
 .container {
   margin: 0 auto;
   min-height: 100vh;

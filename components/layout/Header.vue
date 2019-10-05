@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav class="nav navbar-nav">
-      <ul class="">
+      <ul class>
         <li v-for="(item,index) in items" :key="index" class="block">
           <router-link :to="item.path">{{item.title}}</router-link>
         </li>
@@ -10,7 +10,7 @@
   </div>
 </template>
 
-<script>
+<script scoped>
 export default {
   data() {
     return {
@@ -23,7 +23,7 @@ export default {
           title: "Upload",
           path: "/upload"
         },
-         {
+        {
           title: "result",
           path: "/result"
         }
@@ -42,15 +42,15 @@ ul {
   width: 30%;
   line-height: 80px;
   a {
-    font-size:30px;
+    font-size: 30px;
     color: #000;
   }
-  a:hover{
+  a:hover {
     text-decoration: none;
-    color:#F6AD49;
+    color: #f6ad49;
   }
-  .block{
-    margin:0 10px;
+  .block {
+    margin: 0 10px;
   }
 }
 </style>
