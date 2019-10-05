@@ -30,6 +30,10 @@ export default {
         {
           title: "Upload",
           path: "/upload"
+        },
+         {
+          title: "result",
+          path: "/result"
         }
       ]
     };
