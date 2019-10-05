@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <ul class="navbar-nav">
-        <li v-for="(item,index) in items" :key="index" class="nav-item">
+        <li v-for="(item,index) in items" :key="index" class="nav-item block">
           <router-link :to="item.path">{{item.title}}</router-link>
         </li>
       </ul>
@@ -43,6 +43,7 @@ export default {
 
 <style lang="scss">
 ul {
+  margin: 0 auto;
   list-style: none;
   display: flex;
   justify-content: space-around;
@@ -54,6 +55,10 @@ ul {
   }
   a:hover{
     text-decoration: none;
+    color:#F6AD49;
+  }
+  .block{
+    margin:0 10px;
   }
 }
 </style>
