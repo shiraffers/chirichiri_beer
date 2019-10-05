@@ -3,15 +3,6 @@
     
     <h3>beers</h3>
 
-
-
-
-
-
-
-
-
-
     <table class="table table-responsive-sm table-hover table-outline mb-0">
                     <thead class="thead-light">
                       <tr>

@@ -29,9 +29,10 @@ export default {
             }
         }
     },
-    mounted: function() {
+    mounted() {
+        console.log("子供")
         this.renderChart(this.chartData, this.options)
-        console.log(this.items);
+        console.log({items: this.items});
     }
 }
 </script>

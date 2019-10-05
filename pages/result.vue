@@ -1,30 +1,47 @@
-<template>
-  <div>
-    <Chart :items="items"></Chart>
-  </div>
-</template>
-
-<style>
-</style>
 
 <script>
-import Chart from '../components/layout/Chart';
-import axios from 'axios';
-
+import { Bar } from 'vue-chartjs'
+import axios from "axios"
 export default {
-  components: {
-    Chart
-  },
-  data() {
-    return {
-        items: []
-    }
-  },
-  async created() {
+    extends: Bar,
+    data() {
+        return {
+          items: [],
+          chartData: {
+                labels: [],
+                datasets: [{
+                    label: 'sample',
+                    backgroundColor:'rgba(255, 60, 60, 0.3)',
+                    data: [20, 40, 60]
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Bar chart'
+                },
+                scales: {
+                    yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                            }
+                    }]
+                }
+            }
+        }
+    },
+    async created() {
+       console.log("大人")
     const { data } = await axios.get(`${process.env.API}/beers`);
 
     this.items = data.Items.sort((a, b) => (a.id > b.id ? 1 : -1));
-    console.log(this.items.map(value => value.title));
+ 
+        console.log({items: this.items});
+        this.chartData.labels = this.items.map(item => {
+          console.log("aaa")
+          return item.title
+        })
+            this.renderChart(this.chartData, this.options)
   }
 }
 </script>
