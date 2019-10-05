@@ -10,6 +10,10 @@
         <label for>値段</label>
         <input type="text" v-model="price" />
       </div>
+      <div>
+        <label for>値段</label>
+        <input type="text" v-model="alcohol" />
+      </div>
       <input type="submit" value="追加" />
     </form>
     <li class="lists" v-for="(beer, index) in beers" :key="index" :class="{ active: beer.isActive}">
@@ -31,17 +35,10 @@ export default {
     return {
       beers: [],
       title: "",
-      price: null
+      price: null,
+      alcohol: null
     };
   },
-  //   computed: {
-  //     beers: async function() {
-  //       const { data } = await axios.get(`${process.env.API}/beers`);
-  //       const lists = data.Items.sort((a, b) => (a.id > b.id ? 1 : -1));
-  //       console.log(lists);
-  //       return lists;
-  //     }
-  //   },
   async created() {
     const { data } = await axios.get(`${process.env.API}/beers`);
 
@@ -62,15 +59,18 @@ export default {
       const { data } = await axios.post(`${process.env.API}/beers`, {
         id: this.beers.length + 1,
         title: this.title,
-        price: this.price
+        price: this.price,
+        alcohol: this.alcohol
       });
       this.beers.push({
         id: this.beers.length + 1,
         title: this.title,
-        price: this.price
+        price: this.price,
+        alcohol: this.alcohol
       });
       this.title = null;
       this.price = null;
+      this.alcohol = null;
     },
     edit(beer) {
       this.$router.push({
