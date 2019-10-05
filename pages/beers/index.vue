@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    
+
     <h3>beers</h3>
 
     <table class="table table-responsive-sm table-hover table-outline mb-0">
@@ -52,9 +52,9 @@
           <input type="text" placeholder="アルコール度数" class="block" v-model="alcohol" />度
         </div>
         <div style="text-align: center; margin-top: 20px; ">
-          <input type="submit" style="width: 15%; color: #F39800;border-radius: 15px;border-color: gray;" value="追加" />
+          <input type="submit" style="width: 20%; color: #F39800;border-radius: 15px;border-color: gray;" value="追加" />
         </div>
-         
+
       </div>
     </form>
   </div>

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <ul class="navbar-nav">
-        <li v-for="(item,index) in items" :key="index" class="nav-item block">
+    <nav class="nav navbar-nav">
+      <ul class="">
+        <li v-for="(item,index) in items" :key="index" class="block">
           <router-link :to="item.path">{{item.title}}</router-link>
         </li>
       </ul>
@@ -15,14 +15,6 @@ export default {
   data() {
     return {
       items: [
-        {
-          title: "Home",
-          path: "/"
-        },
-        {
-          title: "About",
-          path: "/about"
-        },
         {
           title: "Beers",
           path: "/beers"
