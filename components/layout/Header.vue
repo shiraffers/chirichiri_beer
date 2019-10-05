@@ -26,6 +26,10 @@ export default {
         {
           title: "Beers",
           path: "/beers"
+        },
+        {
+          title: "Upload",
+          path: "/upload"
         }
       ]
     };
