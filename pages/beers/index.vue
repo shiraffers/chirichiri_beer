@@ -11,7 +11,7 @@
         <input type="text" v-model="price" />
       </div>
       <div>
-        <label for>値段</label>
+        <label for>アルコール度数</label>
         <input type="text" v-model="alcohol" />
       </div>
       <input type="submit" value="追加" />
