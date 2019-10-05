@@ -3,15 +3,6 @@
     
     <h3>beers</h3>
 
-
-
-
-
-
-
-
-
-
     <table class="table table-responsive-sm table-hover table-outline mb-0">
                     <thead class="thead-light">
                       <tr>
@@ -39,7 +30,7 @@
                             </div>
                           </div>
                           <div class="progress progress-xs">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 50%" :aria-valuenow="beer.alcohol" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-success" role="progressbar" :style="{width: `${beer.alcohol}%`}" :aria-valuenow="beer.alcohol" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                         </td>
                       </tr>

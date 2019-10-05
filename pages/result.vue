@@ -1,30 +1,57 @@
-<template>
-  <div>
-    <Chart :items="items"></Chart>
-  </div>
-</template>
-
-<style>
-</style>
 
 <script>
-import Chart from '../components/layout/Chart';
-import axios from 'axios';
-
+import { Bar } from 'vue-chartjs'
+import axios from "axios"
 export default {
-  components: {
-    Chart
-  },
-  data() {
-    return {
-        items: []
-    }
-  },
-  async created() {
-    const { data } = await axios.get(`${process.env.API}/beers`);
+    extends: Bar,
+    data() {
+        return {
+          items: [],
+          chartData: {
+                labels: [],
+                datasets: [{
+                    label: 'コスパ度数',
+                    backgroundColor:'rgba(255, 60, 60, 0.3)',
+                    data: []
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Bar chart'
+                },
+                scales: {
+                    yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                            }
+                    }]
+                }
+            }
+        }
+    },
+    async created() {
+       console.log("大人")
+      const { data } = await axios.get(`${process.env.API}/beers`);
+      this.items = data.Items.sort((a, b) => (a.id > b.id ? 1 : -1));
 
-    this.items = data.Items.sort((a, b) => (a.id > b.id ? 1 : -1));
-    console.log(this.items.map(value => value.title));
+          console.log({items: this.items});
+          this.chartData.labels = this.items.map(item => {
+            console.log("aaa")
+            return item.title
+          })
+
+           this.chartData.datasets[0].data = this.items.map(item => {
+            return item.alcohol / item.price * 100
+          })
+        this.renderChart(this.chartData, this.options)
   }
 }
 </script>
+
+
+<style>
+#bar-chart{
+
+}
+</style>
