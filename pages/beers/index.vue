@@ -48,7 +48,7 @@ export default {
         id: this.beers.length + 1,
         title: beer.title,
         price: beer.price,
-        alcohol: beer.alcohol
+        alcohol: beer.alcohol,
         isActive: false
       });
     });
