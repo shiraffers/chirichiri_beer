@@ -17,7 +17,7 @@ export default {
 };
 </script>
 
-<style lang="scss" >
+<style lang="scss" scoped>
 $mug: #eef5f8;
 $beer: #ffd36d;
 $bubble: darken(#ffd36d, 7%);

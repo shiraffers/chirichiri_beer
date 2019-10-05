@@ -17,7 +17,7 @@ export default {
       items: [
         {
           title: "Beers",
-          path: "/"
+          path: "/beers"
         },
         {
           title: "Upload",
