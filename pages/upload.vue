@@ -5,15 +5,14 @@
   " @submit.prevent="handleSubmit">
       <label v-show="!uploadedImage" class="input-item__label">画像を選択</label>
       <input type="file" @change="onFileChange" />
-      <input type="submit" id="apply-upload" />
-    </form>
-    <div class="preview-item">
-      <img v-show="uploadedImage" class="preview-item-file" :src="uploadedImage" alt />
-      <div v-show="uploadedImage" class="preview-item-btn" @click="remove">
-        <p class="preview-item-name">{{ img_name }}</p>
+      <div class="preview-item">
+        <img v-show="uploadedImage" class="preview-item-file" :src="uploadedImage" alt />
+        <div v-show="uploadedImage" class="preview-item-btn" @click="remove">
+          <p class="preview-item-name">{{ img_name }}</p>
+        </div>
       </div>
-      {{itemLength}}
-    </div>
+      <input type="submit" id="apply-upload" v-show="uploadedImage" />
+    </form>
   </div>
 </template>
 
@@ -24,11 +23,11 @@ import AWS from "aws-sdk";
 const s3_client = () => {
   AWS.config.region = "ap-northeast-1"; // リージョン
   AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: "ap-northeast-1:6d334fea-1af9-4d57-acd5-8295e1bbeba0"
+    IdentityPoolId: process.env.IdentityPoolId
   });
   AWS.config.credentials.get(function(err) {
     if (!err) {
-      console.log("Cognito Identify Id: " + AWS.config.credentials.identityId);
+      console.log("Cognite success!");
     }
   });
   return new AWS.S3({ params: { Bucket: "shiraffers" } });
@@ -47,13 +46,11 @@ export default {
   created() {
     AWS.config.region = "ap-northeast-1"; // リージョン
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: "ap-northeast-1:6d334fea-1af9-4d57-acd5-8295e1bbeba0"
+      IdentityPoolId: process.env.IdentityPoolId
     });
     AWS.config.credentials.get(function(err) {
       if (!err) {
-        console.log(
-          "Cognito Identify Id: " + AWS.config.credentials.identityId
-        );
+        console.log("Cognite success!");
       }
     });
     var vm = this;
@@ -116,3 +113,14 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+.preview-item {
+  width: 500px;
+  height: 500px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

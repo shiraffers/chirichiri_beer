@@ -1,6 +1,9 @@
 
 require('dotenv').config();
-const { API } = process.env;
+const {
+  API,
+  IdentityPoolId
+} = process.env;
 export default {
   mode: 'spa',
   /*
@@ -46,7 +49,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/style-resources',
     'bootstrap-vue/nuxt'
-    ],
+  ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
@@ -54,7 +57,8 @@ export default {
   axios: {
   },
   env: {
-    API
+    API,
+    IdentityPoolId
   },
   /*
   ** Build configuration
