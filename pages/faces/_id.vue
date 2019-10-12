@@ -4,12 +4,12 @@
     <img :src="$route.params.uploadedImage" width="300px" />
     <p>性別: {{face.Gender === "Male" ? "男性" : "女性"}}</p>
     <p>メガネ: {{face.Eyeglasses === false ? "なし": "あり"}}</p>
-    <p>ひげ: {{face.Mustache === false ? "なし": "あり"}}</p>
+    <p>口ひげ: {{face.Mustache === false ? "なし": "あり"}}</p>
     <p>年齢: {{face.AgeRangeLow}}歳 ~ {{face.AgeRangeHigh}}歳</p>
-    <div class="mb-3">
+    <!-- <div class="mb-3">
       笑顔: {{face.Smile | truncation}}%
       <div class="progress-bar bg-success" :style="{width: `${face.Smile}%`, height: `20px;`}"></div>
-    </div>
+    </div>-->
 
     <div v-for="(emotion, i) in face.Emotions" :key="i" class="mb-3">
       {{emotion.Type | translation}}: {{emotion.Confidence | truncation}}%
