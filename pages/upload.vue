@@ -13,12 +13,16 @@
       </div>
       <input type="submit" id="apply-upload" v-show="uploadedImage" />
     </form>
+    <div v-if="loading">
+      <Progress />
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import AWS from "aws-sdk";
+import Progress from "@/components/atoms/Progress";
 
 const s3_client = () => {
   AWS.config.region = "ap-northeast-1"; // リージョン
@@ -40,8 +44,12 @@ export default {
       uploadedImage: "",
       img_name: "",
       files: [],
-      itemLength: 0
+      itemLength: 0,
+      loading: false
     };
+  },
+  components: {
+    Progress
   },
   created() {
     AWS.config.region = "ap-northeast-1"; // リージョン
@@ -85,6 +93,7 @@ export default {
       this.uploadedImage = false;
     },
     async handleSubmit() {
+      this.loading = true;
       var timestamp = new Date().getTime();
       var filename = "file" + timestamp + ".jpg";
       var vm = this;
@@ -97,13 +106,17 @@ export default {
         },
         function(err, data) {
           if (data !== null) {
-            console.log(data);
-            vm.$router.push({
-              name: "faces-id",
-              params: {
-                id: vm.itemLength + 1
-              }
-            });
+            setTimeout(() => {
+              vm.loading = false;
+              console.log(vm.uploadedImage);
+              vm.$router.push({
+                name: "faces-id",
+                params: {
+                  id: vm.itemLength + 1,
+                  uploadedImage: vm.uploadedImage
+                }
+              });
+            }, 2000);
           } else {
             alert("アップロード失敗.");
           }
