@@ -1,46 +1,73 @@
+
 <template>
   <div class="contents">
     <form action="
-    " @submit.prevent="handleSubmit">
-      <label v-show="!uploadedImage" class="input-item__label">
-        画像を選択
-        <input type="file" @change="onFileChange" />
-      </label>
-      <input type="submit" />
+  " @submit.prevent="handleSubmit">
+      <label v-show="!uploadedImage" class="input-item__label">画像を選択</label>
+      <input type="file" @change="onFileChange" />
+      <input type="submit" id="apply-upload" />
     </form>
     <div class="preview-item">
       <img v-show="uploadedImage" class="preview-item-file" :src="uploadedImage" alt />
       <div v-show="uploadedImage" class="preview-item-btn" @click="remove">
         <p class="preview-item-name">{{ img_name }}</p>
       </div>
+      {{itemLength}}
     </div>
-    <button @click="hundleClick">get</button>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import aws from "aws-sdk";
+import AWS from "aws-sdk";
 
-var albumBucketName = "daichi-chirichiri-beer";
-var bucketRegion = "us-ease-1";
+const s3_client = () => {
+  AWS.config.region = "ap-northeast-1"; // リージョン
+  AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+    IdentityPoolId: "ap-northeast-1:6d334fea-1af9-4d57-acd5-8295e1bbeba0"
+  });
+  AWS.config.credentials.get(function(err) {
+    if (!err) {
+      console.log("Cognito Identify Id: " + AWS.config.credentials.identityId);
+    }
+  });
+  return new AWS.S3({ params: { Bucket: "shiraffers" } });
+};
 
-AWS.config.update({
-  region: bucketRegion
-});
-
-var s3 = new AWS.S3({
-  apiVersion: "2006-03-01",
-  params: { Bucket: albumBucketName }
-});
 export default {
   components: {},
   data() {
     return {
       uploadedImage: "",
       img_name: "",
-      files: []
+      files: [],
+      itemLength: 0
     };
+  },
+  created() {
+    AWS.config.region = "ap-northeast-1"; // リージョン
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: "ap-northeast-1:6d334fea-1af9-4d57-acd5-8295e1bbeba0"
+    });
+    AWS.config.credentials.get(function(err) {
+      if (!err) {
+        console.log(
+          "Cognito Identify Id: " + AWS.config.credentials.identityId
+        );
+      }
+    });
+    var vm = this;
+    var dynamo = new AWS.DynamoDB.DocumentClient();
+    var params = {
+      TableName: "Faces"
+    };
+    dynamo.scan(params, function(err, data) {
+      if (err) {
+        console.log("エラー = " + err);
+      } else {
+        vm.itemLength = data.Count;
+      }
+    });
   },
   methods: {
     onFileChange(e) {
@@ -61,28 +88,30 @@ export default {
       this.uploadedImage = false;
     },
     async handleSubmit() {
-      console.log(this.files[0]);
-      const url =
-        "https://134m4mbvlk.execute-api.us-east-1.amazonaws.com/v1/beers";
-      let config = {
-        headers: {
-          "Content-Type": "image/jpeg"
+      var timestamp = new Date().getTime();
+      var filename = "file" + timestamp + ".jpg";
+      var vm = this;
+      s3_client().putObject(
+        {
+          Key: filename,
+          ContentType: this.files[0].type,
+          Body: this.files[0],
+          ACL: "public-read"
+        },
+        function(err, data) {
+          if (data !== null) {
+            console.log(data);
+            vm.$router.push({
+              name: "faces-id",
+              params: {
+                id: vm.itemLength + 1
+              }
+            });
+          } else {
+            alert("アップロード失敗.");
+          }
         }
-      };
-      const { data } = await axios.post(url, this.files[0], config);
-      console.log(data);
-    },
-    hundleClick() {
-      console.log("get");
-      axios
-        .get("https://134m4mbvlk.execute-api.us-east-1.amazonaws.com/v1/beers")
-        .then(res => {
-          console.log(res.data);
-        });
-      // const { data } = axios.get(
-      //   "https://134m4mbvlk.execute-api.us-east-1.amazonaws.com/v1/beers"
-      // );
-      // console.log(data);
+      );
     }
   }
 };
