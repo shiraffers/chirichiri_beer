@@ -116,7 +116,7 @@ export default {
                   uploadedImage: vm.uploadedImage
                 }
               });
-            }, 2000);
+            }, 10000);
           } else {
             alert("アップロード失敗.");
           }

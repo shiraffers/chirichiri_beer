@@ -16,6 +16,7 @@
     "aws-sdk": "^2.543.0",
     "bootstrap-vue": "^2.0.2",
     "chart.js": "^2.8.0",
+    "fs": "0.0.1-security",
     "loaders.css": "^0.1.2",
     "nuxt": "^2.0.0",
     "vue-chartjs": "^3.4.2"

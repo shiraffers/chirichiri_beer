@@ -14,7 +14,7 @@ export default {
 };
 </script>
 <style lang="scss">
-$animation-time: 10s;
+$animation-time: 15s;
 
 .progress-bar-bg {
   width: 100%;
