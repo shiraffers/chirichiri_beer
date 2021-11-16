@@ -13,7 +13,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.1",
-    "aws-sdk": "^2.543.0",
+    "aws-sdk": "^2.814.0",
     "bootstrap-vue": "^2.0.2",
     "chart.js": "^2.8.0",
     "fs": "0.0.1-security",
